@@ -6,6 +6,9 @@ export default function SignupForm() {
 	const [passwordInput, setPassword] = useState("");
 	const [confirmPasswordInput, setConfirmPassword] = useState("");
 
+	//Variable d'état pour le message
+	const [signupMessage, setSignupMessage] = useState("");
+
 	//La fonction qui s'execute quand l"utilisateur tape dans l'input email
 	function handleEmail(e) {
 		//Utiliser la fonction qui permet de modifier la variable d'état
@@ -28,27 +31,42 @@ export default function SignupForm() {
 			email: emailInput,
 			password: passwordInput,
 		});
-		console.log(data);
+
+		const leStatus = data.status;
+
+		if (leStatus === 401) {
+			setSignupMessage("Votre email existe, connectez-vous!");
+			return;
+		}
+		setSignupMessage("Inscription réussie!");
 	}
 
 	return (
 		<div>
 			<h2>Inscription</h2>
 			<form>
-				<input placeholder="Email" value={emailInput} onChange={handleEmail} />
 				<input
+					autoComplete="email"
+					placeholder="Email"
+					value={emailInput}
+					onChange={handleEmail}
+				/>
+				<input
+					autoComplete="new-password"
 					placeholder="Mot de passe"
 					type="password"
 					value={passwordInput}
 					onChange={handlePassword}
 				/>
 				<input
+					autoComplete="new-password"
 					placeholder="Confirmez le mot de passe"
 					type="password"
 					value={confirmPasswordInput}
 					onChange={handleConfirmPassword}
 				/>
 				<button onClick={signup}>Valider</button>
+				<p>{signupMessage}</p>
 			</form>
 		</div>
 	);

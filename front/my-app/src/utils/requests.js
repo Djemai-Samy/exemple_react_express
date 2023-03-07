@@ -9,7 +9,7 @@ async function post(route, data) {
 
 	let reponseData = await reponse.json();
 
-	return reponseData;
+	return { data: reponseData, status: reponse.status };
 }
 
 export const Request = {

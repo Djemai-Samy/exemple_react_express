@@ -24,8 +24,14 @@ export default function LoginForm() {
 		<div>
 			<h2>Inscription</h2>
 			<form>
-				<input placeholder="Email" value={emailInput} onChange={handleEmail} />
 				<input
+					autoComplete="email"
+					placeholder="Email"
+					value={emailInput}
+					onChange={handleEmail}
+				/>
+				<input
+					autoComplete="current-password"
 					placeholder="Mot de passe"
 					type="password"
 					value={passwordInput}

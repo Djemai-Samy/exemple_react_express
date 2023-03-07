@@ -4,6 +4,12 @@ import jwt from "jsonwebtoken";
 export async function addUser(req, reponse) {
 	const { email, password } = req.body;
 
+	//Tester si l'email existe, et retrouner status 401: message: User already exist
+	const user = await User.findOne({ email: email });
+	if (user) {
+		reponse.status(401).json({ message: "Email already exist" });
+		return;
+	}
 	const newUser = await User.create({ email: email, password: password });
 
 	reponse.json({ user: newUser });
@@ -27,8 +33,10 @@ export async function loginUser(req, rep) {
 		return;
 	}
 
-	//Créer le token
+	//Créer le token: payload, clé secrète, options
 	const token = jwt.sign({ id: user._id }, "secret_key", { expiresIn: "7d" });
+
+	//En plus: refresh_token
 
 	rep.status(200).json({ user: user, token: token });
 }
