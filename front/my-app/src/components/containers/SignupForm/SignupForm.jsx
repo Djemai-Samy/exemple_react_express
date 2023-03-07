@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { Request } from "../../../utils/requests";
 export default function SignupForm() {
 	//Créer les variables d'états pour stocker les entrées
 	const [emailInput, setEmail] = useState("");
@@ -20,21 +20,15 @@ export default function SignupForm() {
 		setConfirmPassword(e.target.value);
 	}
 
-	function signup(e) {
+	async function signup(e) {
 		//La fonction preventDefault permet de na pas rafraichir la page
 		e.preventDefault();
-		fetch("/users/signup", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ email: emailInput, password: passwordInput }),
-		}).then((reponse) => {
-			console.log(reponse);
-			reponse.json().then((data) => {
-				console.log(data);
-			});
+
+		let data = await Request.post("/users/signup", {
+			email: emailInput,
+			password: passwordInput,
 		});
+		console.log(data);
 	}
 
 	return (
