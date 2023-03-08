@@ -33,7 +33,7 @@ export default function SignupForm() {
 		});
 
 		const leStatus = data.status;
-
+		console.log(data);
 		if (leStatus === 401) {
 			setSignupMessage("Votre email existe, connectez-vous!");
 			return;
@@ -44,6 +44,7 @@ export default function SignupForm() {
 	return (
 		<div>
 			<h2>Inscription</h2>
+			<p>{emailInput}</p>
 			<form>
 				<input
 					autoComplete="email"
